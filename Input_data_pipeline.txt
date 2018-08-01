@@ -1,0 +1,61 @@
+
+###########################
+#   Input tables format   #
+###########################
+
+#smurf
+
+CREATE TABLE `smurf` (
+  `org_id` int(11) NOT NULL,
+  `filename` text NOT NULL,
+  `clust_size` int(11) NOT NULL,
+  `clust_backbone` varchar(50) NOT NULL,
+  `clust_origin` varchar(50) NOT NULL,
+  `clust_start` int(11) NOT NULL,
+  `clust_type` varchar(50) NOT NULL,
+  `clust_end` int(11) NOT NULL,
+  `sm_id` int(11) NOT NULL,
+  `sm_protein_id` int(11) NOT NULL,
+  `sm_short` varchar(100) NOT NULL,
+  `sm_desc` text NOT NULL,
+  `cluster` text NOT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`clust_backbone`,`sm_protein_id`,`org_id`),
+  KEY `sm_protein_id` (`sm_protein_id`),
+  KEY `clust_backbone` (`clust_backbone`),
+  KEY `clust_backbone_sm_protein_id` (`clust_backbone`,`sm_protein_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+# gff_ultimo
+
+CREATE TABLE `gff_ultimo` (
+  `gff_name` varchar(100) NOT NULL,
+  `gff_seqorigin` varchar(100) NOT NULL,
+  `org_id` int(11) NOT NULL DEFAULT '0',
+  `ustart` bigint(11) DEFAULT NULL,
+  `uend` bigint(11) DEFAULT NULL,
+  `length` bigint(12) DEFAULT NULL,
+  `protein_id` bigint(100) DEFAULT NULL,
+  `trans_id` bigint(100) DEFAULT NULL,
+  `gff_strand` varchar(10) DEFAULT NULL,
+  `geneorder` bigint(21) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+#resistancepipeline_biblast_hfam_july2018
+
+CREATE TABLE `resistancepipeline_biblast_hfam_july2018` (
+  `hfam` int(100) NOT NULL,
+  `org_id` int(100) NOT NULL,
+  `org_name` varchar(100) NOT NULL,
+  `protein_id` int(100) NOT NULL,
+  UNIQUE KEY `i_hfam_org_prot` (`hfam`,`org_name`,`protein_id`),
+  KEY `i_org_prot` (`org_name`,`protein_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+#ik_countfams_resistancepipeline
+
+CREATE TABLE `ik_countfams_resistancepipeline` (
+  `hfam` int(100) NOT NULL,
+  `org_id` int(100) NOT NULL,
+  `count` bigint(21) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
